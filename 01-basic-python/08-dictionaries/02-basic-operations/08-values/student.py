@@ -1,1 +1,2 @@
-# Write your code here
+def values(dictonary):
+    return list(dictonary.values())
