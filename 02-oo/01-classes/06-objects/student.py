@@ -1,6 +1,11 @@
 def main():
     # write your code here
-
+    Aragorn = Brawler(4, 4, "Aragorn")
+    Gimli = Brawler(2, 7, "Gimli")
+    Legolas = Brawler(7, 7, "Legolas")
+    Frodo = Brawler(3, 2, "Frodo")
+    fight(Aragorn, Gimli)
+    fight(Frodo, Legolas)
 
 # don't touch below this line
 
