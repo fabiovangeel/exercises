@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./06-testing/01-basics/solution"
+    ]
+}
