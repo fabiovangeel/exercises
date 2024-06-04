@@ -4,12 +4,21 @@ from calenders import CalendarStub
 from tasks import Task, TaskList
 
 
-def test_creation():
-    today = date(2005, 1, 12)
-    cal = CalendarStub(today)
+def setup_function():
+    global today
+    global future
+    global past
+    global cal
+    global taskl
 
+    today = date(2005, 1, 12)
+    future = today + timedelta(2)
+    past = today - timedelta(2)
+    cal = CalendarStub(today)
     taskl = TaskList(cal)
 
+
+def test_creation():
     assert 0 == len(taskl)
     assert [] == taskl.due_tasks
     assert [] == taskl.finished_tasks
@@ -17,10 +26,7 @@ def test_creation():
 
 
 def test_adding_task_with_due_day_in_future():
-    today = date(2005, 1, 12)
-    future = today + timedelta(2)
-    cal = CalendarStub(today)
-    taskl = TaskList(cal)
+
     task = Task("Study", future)
 
     taskl.add_task(task)
@@ -32,10 +38,7 @@ def test_adding_task_with_due_day_in_future():
 
 
 def test_adding_task_with_due_day_in_past():
-    today = date(2005, 1, 12)
-    past = today - timedelta(2)
-    cal = CalendarStub(today)
-    taskl = TaskList(cal)
+
     task = Task("Study", past)
 
     with pytest.raises(RuntimeError):
@@ -43,24 +46,16 @@ def test_adding_task_with_due_day_in_past():
 
 
 def test_task_becomes_overdue():
-    today = date(2000, 1, 1)
-    tomorrow = date(2000, 1, 2)
-    next_week = date(2000, 1, 8)
-    calendar = CalendarStub(today)
-    task = Task('description', tomorrow)
-    task_list = TaskList(calendar)
-    task_list.add_task(task)
+    next_week = date(2005, 1, 15)
+    task = Task('description', future)
+    taskl.add_task(task)
 
-    calendar.today = next_week
+    cal.today = next_week
 
-    assert [task] == task_list.overdue_tasks
+    assert [task] == taskl.overdue_tasks
 
 
 def test_task_becomes_finished():
-    today = date(2005, 1, 12)
-    future = today + timedelta(2)
-    cal = CalendarStub(today)
-    taskl = TaskList(cal)
     task = Task("Study", future)
     taskl.add_task(task)
 
