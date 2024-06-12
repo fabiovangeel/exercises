@@ -1,11 +1,21 @@
-# Write your own tests for the housing.py file here.
-# You must include the tests asked for in the assignment for full credit.
-# You may add additional tests if you would like to test your code more thoroughly.
-# Additional tests will not result in a higher grade.
-# This file must be able to be run without error in order to receive credit for the required testing.
-####
-# Schrijf hier je eigen tests voor het housing.py bestand.
-# Je moet de gevraagde tests in de opdracht opnemen voor volledige waardering.
-# Je mag extra tests toevoegen als je je code grondiger wilt testen.
-# Extra tests zullen niet leiden tot een hoger cijfer.
-# Dit bestand moet zonder fouten uitgevoerd kunnen worden om punten te krijgen voor de vereiste testen.
+import pytest
+
+from housing import Villa, StudentKot
+
+
+@pytest.mark.parametrize("villa, sol", [
+    (Villa("Halensebaan 9", 72, 3, 10), 3),
+    (Villa("Kastelweg 54", 30, 1, 5), 1),
+    (Villa("Geldenaaksebaan 255", 200, 3, 10), 6),
+])
+def test_maximum_occupants(villa, sol):
+    assert villa.maximum_occupants == sol
+
+
+@pytest.mark.parametrize("kot, sol", [
+    (StudentKot("Naamsestraat 22", 30), 1),
+    (StudentKot("Brusselsestraat 45", 40), 2),
+    (StudentKot("Bondgenotenlaan 100", 80), 2),
+])
+def test_maximum_occupants_kot(kot, sol):
+    assert kot.maximum_occupants == sol
